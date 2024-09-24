@@ -16,7 +16,7 @@ First, download and set up the repo:
 
 ```bash
 git clone https://github.com/shiml20/FlowTurbo.git
-cd /FlowTurbo
+cd FlowTurbo
 ```
 
 
