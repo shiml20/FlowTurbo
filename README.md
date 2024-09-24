@@ -73,7 +73,7 @@ torchrun --nnodes=1 --nproc_per_node=N FlowTurbo/sample_ddp_feature.py
 
 ##  Acknowledgments
 
-We would like to express our sincere thanks to the author of [SiT]([GitHub - willisma/SiT: Official PyTorch Implementation of "SiT: Exploring Flow and Diffusion-based Generative Models with Scalable Interpolant Transformers"](https://github.com/willisma/SiT)) for the clear code base.
+We would like to express our sincere thanks to the author of [SiT](https://github.com/willisma/SiT) for the clear code base.
 
 
 
