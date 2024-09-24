@@ -16,7 +16,7 @@ First, download and set up the repo:
 
 ```bash
 git clone https://github.com/shiml20/FlowTurbo.git
-cd SiT
+cd /FlowTurbo
 ```
 
 
@@ -38,6 +38,12 @@ conda activate FlowTurbo
 ```bash
 python sample.py
 ```
+
+For convenience, our pre-trained SiT-XL/2-Refiner models can be downloaded directly here as well:
+
+| SiT-Refiner Model                                            | Image Resolution |
+| ------------------------------------------------------------ | ---------------- |
+| [XL/2](https://cloud.tsinghua.edu.cn/f/3d07d92dd2314857ae50/?dl=1) | 256x256          |
 
 
 
@@ -63,6 +69,11 @@ generates a folder of samples as well as a `.npz` file which can be directly use
 torchrun --nnodes=1 --nproc_per_node=N FlowTurbo/sample_ddp_feature.py
 ```
 
+
+
+##  Acknowledgments
+
+We would like to express our sincere thanks to the author of [SiT]([GitHub - willisma/SiT: Official PyTorch Implementation of "SiT: Exploring Flow and Diffusion-based Generative Models with Scalable Interpolant Transformers"](https://github.com/willisma/SiT)) for the clear code base.
 
 
 
