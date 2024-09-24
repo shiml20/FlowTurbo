@@ -55,7 +55,7 @@ one node:
 ```bash
 CUDA_VISIBLE_DEVICES='0' torchrun --nnodes=1 --nproc_per_node=1 --master_port 12345 train.py \
     --data-path /data/ILSVRC2012/train --global-batch-size 18 \
-    --note 'debug' --ckpt-every 5000 --lr 5e-5 --vae_ckpt vae-ema --model_teacher_ckpt /pretrained_models/predictor.ckpt \
+    --note 'NAME' --ckpt-every 5000 --lr 5e-5 --vae_ckpt vae-ema --model_teacher_ckpt /pretrained_models/predictor.ckpt \
 ```
 
 
