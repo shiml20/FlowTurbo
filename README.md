@@ -1,12 +1,12 @@
 ## 🚀 FlowTurbo: Towards Real-time Flow-Based Image Generation with Velocity Refiner<br><sub>Official PyTorch Implementation</sub>
 
+Created by [Wenliang Zhao](https://wl-zhao.github.io/)\*, [Minglei Shi](https://github.com/shiml20)\*, [Xumin Yu](https://yuxumin.github.io/), [Jie Zhou](https://scholar.google.com/citations?user=6a79aPwAAAAJ&hl=en&authuser=1), [Jiwen Lu](https://scholar.google.com/citations?user=TN8uDQoAAAAJ&hl=en&authuser=1)
 
+This repo contains PyTorch model definition and training/sampling code for FlowTurbo (NeurIPS 2024). 
 
-This repo contains PyTorch model definition and training/sampling code for our paper. 
+[[arXiv]](https://arxiv.org/abs/xxxxx)
 
-
-
-We propose a framework called FlowTurbo to accelerate the sampling of flow-based models while still enhancing the sampling quality. Our primary observation is that the velocity predictor’s outputs in the flow-based models will become stable during the sampling, enabling the estimation of velocity via a lightweight velocity refiner. Additionally, we introduce several techniques, including a pseudo corrector and sample-aware compilation, to further reduce inference time. Since FlowTurbo does not change the multi-step sampling paradigm, it can be effectively applied to various tasks such as image editing, inpainting, etc. By applying FlowTurbo to different flow-based models, we obtain an acceleration ratio of 53.1%∼58.3% on class-conditional generation and 29.8%∼38.5% on text- to-image generation. Notably, FlowTurbo reaches an FID of 2.11 on ImageNet with 100 (ms / img) and FID of 3.93 with 38 (ms / img), achieving the real-time image generation and establishing the new state-of-the-art.
+We propose a framework called FlowTurbo to accelerate the sampling of flow-based models while still enhancing the sampling quality. Our primary observation is that the velocity predictor’s outputs in the flow-based models will become stable during the sampling, enabling the estimation of velocity via a lightweight velocity refiner. Additionally, we introduce several techniques, including a pseudo corrector and sample-aware compilation, to further reduce inference time. Since FlowTurbo does not change the multi-step sampling paradigm, it can be effectively applied to various tasks such as image editing, inpainting, etc. By applying FlowTurbo to different flow-based models, we obtain an acceleration ratio of 53.1%∼58.3% on class-conditional generation and 29.8%∼38.5% on text-to-image generation. Notably, FlowTurbo reaches an FID of 2.11 on ImageNet with 100 (ms / img) and FID of 3.93 with 38 (ms / img), achieving the real-time image generation and establishing the new state-of-the-art.
 
 
 
@@ -74,6 +74,19 @@ torchrun --nnodes=1 --nproc_per_node=N FlowTurbo/sample_ddp_feature.py
 ##  Acknowledgments
 
 We would like to express our sincere thanks to the author of [SiT](https://github.com/willisma/SiT) for the clear code base.
+
+## Citation
+
+If you find our work useful in your research, please consider citing:
+```
+@article{zhao2024flowturbo,
+  title={FlowTurbo: Towards Real-time Flow-Based Image Generation with Velocity Refiner},
+  author={Zhao, Wenliang and Shi, Minglei and Yu, Xumin and Zhou, Jie and Lu, Jiwen},
+  journal={NeurIPS},
+  year={2024}
+}
+```
+
 
 
 
