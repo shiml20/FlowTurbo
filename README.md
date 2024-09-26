@@ -1,8 +1,8 @@
-## 🚀 FlowTurbo: Towards Real-time Flow-Based Image Generation with Velocity Refiner<br><sub>Official PyTorch Implementation</sub>
+## 🚀 FlowTurbo: Towards Real-time Flow-Based Image Generation with Velocity Refiner (NeurIPS 2024)
 
 Created by [Wenliang Zhao](https://wl-zhao.github.io/)\*, [Minglei Shi](https://github.com/shiml20)\*, [Xumin Yu](https://yuxumin.github.io/), [Jie Zhou](https://scholar.google.com/citations?user=6a79aPwAAAAJ&hl=en&authuser=1), [Jiwen Lu](https://scholar.google.com/citations?user=TN8uDQoAAAAJ&hl=en&authuser=1)
 
-This repo contains PyTorch model definition and training/sampling code for FlowTurbo (NeurIPS 2024). 
+This repo contains PyTorch model definition and training/sampling code for FlowTurbo. 
 
 [[arXiv]](https://arxiv.org/abs/xxxxx)
 
