@@ -4,7 +4,7 @@ Created by [Wenliang Zhao](https://wl-zhao.github.io/)\*, [Minglei Shi](https://
 
 This repo contains PyTorch model definition and training/sampling code for FlowTurbo. 
 
-[[arXiv]](https://arxiv.org/abs/xxxxx)
+[[arXiv]](http://arxiv.org/abs/2409.18128)
 
 We propose a framework called FlowTurbo to accelerate the sampling of flow-based models while still enhancing the sampling quality. Our primary observation is that the velocity predictor’s outputs in the flow-based models will become stable during the sampling, enabling the estimation of velocity via a lightweight velocity refiner. Additionally, we introduce several techniques, including a pseudo corrector and sample-aware compilation, to further reduce inference time. Since FlowTurbo does not change the multi-step sampling paradigm, it can be effectively applied to various tasks such as image editing, inpainting, etc. By applying FlowTurbo to different flow-based models, we obtain an acceleration ratio of 53.1%∼58.3% on class-conditional generation and 29.8%∼38.5% on text-to-image generation. Notably, FlowTurbo reaches an FID of 2.11 on ImageNet with 100 (ms / img) and FID of 3.93 with 38 (ms / img), achieving the real-time image generation and establishing the new state-of-the-art.
 
