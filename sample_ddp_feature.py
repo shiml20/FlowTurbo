@@ -59,15 +59,13 @@ def main(args):
     rank = dist.get_rank()
     device = rank % torch.cuda.device_count()
     seed = args.global_seed * dist.get_world_size() + rank
-    # 获取当前时间戳
-    import time
-    current_time = int(time.time())
+    # random seed [current timestamp]
+    # import time
+    # current_time = int(time.time())
+    # torch.manual_seed(current_time)
 
-    # 使用当前时间戳设置随机种子
-    torch.manual_seed(current_time)
+    torch.manual_seed(seed)
 
-
-    # torch.manual_seed(seed)
     torch.cuda.set_device(device)
     print(f"Starting rank={rank}, seed={seed}, world_size={dist.get_world_size()}.")
 

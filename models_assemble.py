@@ -427,6 +427,7 @@ class VelocityBlock(nn.Module):
         return imgs
 
     def _forward(self, x, t, y, cfg_scale):
+        t = torch.ones(x[0].size(0)).to(x.device) * t if isinstance(x, tuple) else torch.ones(x.size(0)).to(x.device) * t
         half = x[: len(x) // 2]
         x = torch.cat([half, half], dim=0)
         x = self.x_embedder(x) + self.pos_embed
@@ -447,22 +448,18 @@ class VelocityBlock(nn.Module):
         return v
 
     def forward(self, input):
-        x, i, d_i, y, cfg_scale= input[0], input[1], input[2], input[3], input[4]
+        x, i, d_i, y, cfg_scale = input[0], input[1], input[2], input[3], input[4]
         y_ori = y
-
-        if d_i is not None and self.use_cache:
+        
+        if (d_i is not None) and self.use_cache:
             x_ori = x
         else:
             x_ori = x
-            t = self.t[i]
-            t = torch.ones(x[0].size(0)).to(x.device) * t if isinstance(x, tuple) else torch.ones(x.size(0)).to(x.device) * t
-            d_i = self._forward(x, t, y, cfg_scale)
+            d_i = self._forward(x, self.t[i], y, cfg_scale)
 
         x_tilde_i_plus_i = x + self.delta_t * d_i
         x = x_tilde_i_plus_i      
-        t = self.t[i+1]
-        t = torch.ones(x[0].size(0)).to(x.device) * t if isinstance(x, tuple) else torch.ones(x.size(0)).to(x.device) * t
-        d_i_plus_1 = self._forward(x, t, y, cfg_scale)
+        d_i_plus_1 = self._forward(x, self.t[i+1], y, cfg_scale)
         xi =  x_ori + 1/2 * self.delta_t * (d_i + d_i_plus_1)
 
         return xi, i + 1, d_i_plus_1, y_ori, cfg_scale, d_i

@@ -63,7 +63,9 @@ def read_statistics(npz_path: str):
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--sample_npz", type=str, default="your_sample_feature.npz")
+    # example usage: python fid.py your_sample_feature.npz --ref_npz VIRTUAL_imagenet256_labeled.npz
+    parser.add_argument("sample_npz", type=str, default="your_sample_feature.npz")
+    # parser.add_argument("--sample_npz", type=str, default="your_sample_feature.npz")
     parser.add_argument("--ref_npz", type=str, default="VIRTUAL_imagenet256_labeled.npz")
     args = parser.parse_args()
     

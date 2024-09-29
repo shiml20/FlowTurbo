@@ -41,7 +41,7 @@ y_null = torch.tensor([1000] * n, device=device)
 y = torch.cat([y, y_null], 0)
 model_kwargs = dict(y=y, cfg_scale=cfg_scale)
 
-sample_config = [{'N_H': 1, 'N_P': 5, 'N_R': 6, 'SAC': False}]
+sample_config = [{'N_H': 1, 'N_P': 5, 'N_R': 3, 'SAC': False}]
 method_str = ''.join([f"{key}{value}" for key, value in sample_config[0].items()])
 
 FlowTurbo = FlowTurboAssemble(predictor_ckpt=predictor_ckpt, refiner_ckpt=refiner_ckpt, vae_ckpt=vae_ckpt, **sample_config[0])
