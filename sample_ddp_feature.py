@@ -75,14 +75,14 @@ def main(mode, args):
     latent_size = args.image_size // 8
     # Create folder to save samples:
     tag = args.tag
+    vae_ckpt = args.vae_ckpt
 
-    sitturbo = FlowTurboAssemble(predictor_ckpt=args.predictor_ckpt, refiner_ckpt=args.refiner_ckpt, N_H=1, N_P=5, N_R=3)
+    sitturbo = FlowTurboAssemble(predictor_ckpt=args.predictor_ckpt, refiner_ckpt=args.refiner_ckpt, vae_ckpt=vae_ckpt, N_H=1, N_P=5, N_R=3)
     sitturbo.eval() # important!
 
     image_size = "256"
-    vae_model = "stabilityai/sd-vae-ft-ema"
     latent_size = int(image_size) // 8
-
+    print(f"Loading VAE model from {vae_model}")
     vae = AutoencoderKL.from_pretrained(vae_model).to(device)
     sitturbo.to(device) # important!
     inception = InceptionV3().to(device).eval()
@@ -135,7 +135,7 @@ def main(mode, args):
 
 
         with torch.autocast(device_type="cuda"):
-            samples = sitturbo(z, **model_kwargs)
+            imgs, samples = sitturbo(z, **model_kwargs)
         
         if using_cfg:
             samples, _ = samples.chunk(2, dim=0)  # Remove null class samples
@@ -217,6 +217,7 @@ if __name__ == "__main__":
             steps = [input[0]] * int(input[1])
 
         return steps
+    
     # parser.add_argument("--model", type=str, choices=list(SiT_models.keys()), default="SiT-XL/2")
     parser.add_argument("--vae",  type=str, choices=["ema", "mse"], default="ema")
     parser.add_argument("--sample-dir", type=str, default="samples")
@@ -232,12 +233,11 @@ if __name__ == "__main__":
     parser.add_argument("--global-seed", type=int, default=0)
     parser.add_argument("--tf32", action=argparse.BooleanOptionalAction, default=True,
                         help="By default, use TF32 matmuls. This massively accelerates sampling on Ampere GPUs.")
-    parser.add_argument("--ckpt", type=str, default=None,
-                        help="Optional path to a SiT checkpoint (default: auto-download a pre-trained SiT-XL/2 model).")
     parser.add_argument("--step", type=str_to_list, default=[], help="List of items")
     
     parser.add_argument("--predictor_ckpt", type=str, default=None)     
     parser.add_argument("--refiner_ckpt", type=str, default=None)     
+    parser.add_argument("--vae_ckpt", type=str, default=None)     
     
     parse_transport_args(parser)
 

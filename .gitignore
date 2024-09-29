@@ -1,1 +1,11 @@
+__pycache__
 .DS_Store
+cmd.sh
+samples
+*.npz
+*.npy
+*.pt
+*.pth
+vae-ema
+*.png
+results

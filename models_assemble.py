@@ -485,7 +485,7 @@ class FlowTurboAssemble(nn.Module):
                 N_H=2,
                 N_P=4,
                 N_R=3,
-                SAC=True
+                SAC=False
                 ) -> None:
         super().__init__()
 
@@ -587,7 +587,7 @@ class FlowTurboAssemble(nn.Module):
         refiner_output = self.refine_seq(refiner_input)
         img = self.vae.decode(refiner_output[0].chunk(2, 0)[0] / 0.18215).sample
 
-        return img
+        return img, refiner_output[0]
 
         
 #################################################################################
