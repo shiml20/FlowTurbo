@@ -63,7 +63,6 @@ def read_statistics(npz_path: str):
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("sample_npz", type=str, default="/data2/sml/EfficientSiT/samples/SiT-XL-2-SiT-XL-2-256-cfg-1.0-50-ODE-250-dopri5_feature-vae-ema.npz")
     parser.add_argument("--sample_npz", type=str, default="your_sample_feature.npz")
     parser.add_argument("--ref_npz", type=str, default="VIRTUAL_imagenet256_labeled.npz")
     args = parser.parse_args()
