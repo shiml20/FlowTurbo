@@ -365,7 +365,6 @@ class VelocityRefinerBlock(nn.Module):
 
     def forward(self, input):
         x, i, v, y, cfg_scale= input[0], input[1], input[2], input[3], input[4]
-        print(i)
         y_ori = y
         xi = x
 
