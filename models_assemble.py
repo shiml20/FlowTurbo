@@ -360,10 +360,12 @@ class VelocityRefinerBlock(nn.Module):
         half_eps = uncond_eps + cfg_scale * (cond_eps - uncond_eps)
         eps = torch.cat([half_eps, half_eps], dim=0)
         delta_v = torch.cat([eps, rest], dim=1)
+        
         return delta_v
 
     def forward(self, input):
         x, i, v, y, cfg_scale= input[0], input[1], input[2], input[3], input[4]
+        print(i)
         y_ori = y
         xi = x
 
@@ -372,7 +374,7 @@ class VelocityRefinerBlock(nn.Module):
         d_i_plus_1 = self._forward(x_tilde_i_plus_i, self.t[i+1], y, cfg_scale, v) + d_i
         xi = xi + 1/2 * self.delta_t * (d_i + d_i_plus_1)
 
-        return xi, i, d_i, y_ori, cfg_scale
+        return xi, i + 1, d_i, y_ori, cfg_scale
 
 
 class VelocityBlock(nn.Module):

@@ -76,8 +76,12 @@ def main(args):
     # Create folder to save samples:
     tag = args.tag
     vae_ckpt = args.vae_ckpt
-
-    sitturbo = FlowTurboAssemble(predictor_ckpt=args.predictor_ckpt, refiner_ckpt=args.refiner_ckpt, vae_ckpt=vae_ckpt, N_H=1, N_P=5, N_R=3)
+    METHED = {
+        "N_H": 1,
+        "N_P": 5,
+        "N_R": 3,
+    }
+    sitturbo = FlowTurboAssemble(predictor_ckpt=args.predictor_ckpt, refiner_ckpt=args.refiner_ckpt, vae_ckpt=vae_ckpt, **METHED)
     sitturbo.eval() # important!
 
     image_size = "256"
@@ -91,7 +95,8 @@ def main(args):
     if not using_cfg:
         print('not use cfg')
 
-    folder_name = f"{tag}-cfg-{args.cfg_scale}-{args.per_proc_batch_size}-fid{args.num_fid_samples}"
+    method_str = ''.join([f"{key}{value}" for key, value in METHED.items()])
+    folder_name = f"{tag}-cfg-{args.cfg_scale}-{args.per_proc_batch_size}-fid{args.num_fid_samples}-{method_str}"
     sample_folder_dir = f"{args.sample_dir}/{folder_name}"
     
     if rank == 0:

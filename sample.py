@@ -18,7 +18,7 @@ class_labels = [207, 980, 387, 974, 88, 972, 928, 279]
 image_size = "256"
 
 refiner_ckpt = 'SiT-XL-2-Refiner.pt'
-predictor_ckpt = 'SiT-XL-2-256.pt'
+predictor_ckpt = 'SiT-XL-2-256x256.pt'
 vae_ckpt = "vae-ema"
 
 
@@ -41,7 +41,8 @@ y_null = torch.tensor([1000] * n, device=device)
 y = torch.cat([y, y_null], 0)
 model_kwargs = dict(y=y, cfg_scale=cfg_scale)
 
-sample_config = [{'N_H': 5, 'N_P': 4, 'N_R': 10, 'SAC': False}]
+sample_config = [{'N_H': 1, 'N_P': 5, 'N_R': 6, 'SAC': False}]
+method_str = ''.join([f"{key}{value}" for key, value in sample_config[0].items()])
 
 FlowTurbo = FlowTurboAssemble(predictor_ckpt=predictor_ckpt, refiner_ckpt=refiner_ckpt, vae_ckpt=vae_ckpt, **sample_config[0])
 FlowTurbo.eval()
@@ -50,7 +51,7 @@ FlowTurbo.to(device)
 
 with torch.autocast(device_type="cuda"):
     imgs, samples = FlowTurbo(z, **model_kwargs)
-    image_path =f'sample.png'
+    image_path =f'sample_{method_str}.png'
     save_image(imgs, image_path, nrow=int(samples_per_row), 
             normalize=True, value_range=(-1, 1))
     print(f"Images are saved in {image_path}")
