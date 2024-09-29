@@ -9,3 +9,4 @@ samples
 vae-ema
 *.png
 results
+*.ipynb
