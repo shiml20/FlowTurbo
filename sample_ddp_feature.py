@@ -46,7 +46,7 @@ def create_npz_from_sample_folder(sample_dir, num=50_000, batch_size=4):
     return npz_path
 
 @torch.no_grad()
-def main(mode, args):
+def main(args):
     """
     Run sampling.
     """
@@ -82,8 +82,7 @@ def main(mode, args):
 
     image_size = "256"
     latent_size = int(image_size) // 8
-    print(f"Loading VAE model from {vae_model}")
-    vae = AutoencoderKL.from_pretrained(vae_model).to(device)
+    vae = AutoencoderKL.from_pretrained(vae_ckpt).to(device)
     sitturbo.to(device) # important!
     inception = InceptionV3().to(device).eval()
     
@@ -92,8 +91,7 @@ def main(mode, args):
     if not using_cfg:
         print('not use cfg')
 
-    folder_name = f"{tag}-cfg-{args.cfg_scale}-{args.per_proc_batch_size}-"\
-                f"{args.num_sampling_steps}-fid{args.num_fid_samples}"
+    folder_name = f"{tag}-cfg-{args.cfg_scale}-{args.per_proc_batch_size}-fid{args.num_fid_samples}"
     sample_folder_dir = f"{args.sample_dir}/{folder_name}"
     
     if rank == 0:
@@ -196,44 +194,16 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
-    if len(sys.argv) < 2:
-        print("Usage: program.py <mode> [options]")
-        sys.exit(1)
-    
-    mode = sys.argv[1]
-    
-    assert mode[:2] != "--", "Usage: program.py <mode> [options]"
-    assert mode in ["ODE", "SDE"], "Invalid mode. Please choose 'ODE' or 'SDE'"
-    def str_to_list(s):
-        input = [str(item) for item in s.split(',')]
-        if len(input) == 6:
-            steps = [input[0]] * int(input[1]) + \
-                    [input[2]] * int(input[3]) + \
-                    [input[4]] * int(input[5])
-        elif len(input) == 4:
-            steps = [input[0]] * int(input[1]) + \
-                    [input[2]] * int(input[3])
-        elif len(input) == 2:
-            steps = [input[0]] * int(input[1])
-
-        return steps
-    
-    # parser.add_argument("--model", type=str, choices=list(SiT_models.keys()), default="SiT-XL/2")
-    parser.add_argument("--vae",  type=str, choices=["ema", "mse"], default="ema")
     parser.add_argument("--sample-dir", type=str, default="samples")
     parser.add_argument("--tag", type=str)
     parser.add_argument("--per_proc_batch_size", type=int, default=5)
     parser.add_argument("--num_fid_samples", type=int, default=5_0000)
     parser.add_argument("--image-size", type=int, choices=[256, 512], default=256)
-    parser.add_argument("--threshold", type=float, default=0.0)
     parser.add_argument("--num-classes", type=int, default=1000)
-    parser.add_argument("--num_steps", type=int, default=250)
     parser.add_argument("--cfg_scale",  type=float, default=4.0)
-    parser.add_argument("--num_sampling_steps", type=int, default=10)
     parser.add_argument("--global-seed", type=int, default=0)
     parser.add_argument("--tf32", action=argparse.BooleanOptionalAction, default=True,
                         help="By default, use TF32 matmuls. This massively accelerates sampling on Ampere GPUs.")
-    parser.add_argument("--step", type=str_to_list, default=[], help="List of items")
     
     parser.add_argument("--predictor_ckpt", type=str, default=None)     
     parser.add_argument("--refiner_ckpt", type=str, default=None)     
@@ -242,4 +212,4 @@ if __name__ == "__main__":
     parse_transport_args(parser)
 
     args = parser.parse_known_args()[0]
-    main(mode, args)
+    main(args)

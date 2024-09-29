@@ -66,7 +66,12 @@ We include a `sample_ddp_feature.py` script which samples a large number of imag
 generates a folder of samples as well as a `.npz` file which can be directly used in `evaluator.py` which we provided to compute FID, Inception Score and other metrics. For example, to sample 50K images from our pre-trained FlowTurbo model over `N` GPUs under default ODE sampler settings, run:
 
 ```bash
-torchrun --nnodes=1 --nproc_per_node=N FlowTurbo/sample_ddp_feature.py
+torchrun --nnodes=1 --nproc_per_node=N sample_ddp_feature.py \
+    --vae_ckpt vae-ema \
+    --predictor_ckpt SiT-XL-2-256x256.pt \
+    --refiner_ckpt SiT-XL-2-Refiner.pt \
+    --num_fid_samples 60 --per_proc_batch_size 20 --cfg_scale 1.5 \
+    --tag TEST ;\
 ```
 
 
