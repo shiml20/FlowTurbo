@@ -58,11 +58,13 @@ def main(args):
     dist.init_process_group("nccl")
     rank = dist.get_rank()
     device = rank % torch.cuda.device_count()
-    seed = args.global_seed * dist.get_world_size() + rank
-    # random seed [current timestamp]
-    # import time
-    # current_time = int(time.time())
-    # torch.manual_seed(current_time)
+    if args.fix_seed:
+        seed = args.fix_seed + rank
+        print(seed)
+    else:
+        seed = args.global_seed * dist.get_world_size() + rank
+        print(seed)
+
 
     torch.manual_seed(seed)
 
@@ -75,9 +77,9 @@ def main(args):
     tag = args.tag
     vae_ckpt = args.vae_ckpt
     METHED = {
-        "N_H": 1,
-        "N_P": 5,
-        "N_R": 3,
+        "N_H": 8,
+        "N_P": 9,
+        "N_R": 5,
     }
     sitturbo = FlowTurboAssemble(predictor_ckpt=args.predictor_ckpt, refiner_ckpt=args.refiner_ckpt, vae_ckpt=vae_ckpt, **METHED)
     sitturbo.eval() # important!
@@ -211,6 +213,7 @@ if __name__ == "__main__":
     parser.add_argument("--predictor_ckpt", type=str, default=None)     
     parser.add_argument("--refiner_ckpt", type=str, default=None)     
     parser.add_argument("--vae_ckpt", type=str, default=None)     
+    parser.add_argument("--fix_seed", type=int, default=1)     
     
     parse_transport_args(parser)
 
