@@ -43,7 +43,7 @@ For convenience, our pre-trained SiT-XL/2-Refiner models can be downloaded direc
 
 | SiT-Refiner Model                                            | Image Resolution |
 | ------------------------------------------------------------ | ---------------- |
-| [XL/2]([https://cloud.tsinghua.edu.cn/f/3d07d92dd2314857ae50/?dl=1](https://cloud.tsinghua.edu.cn/f/915ed24e555b4393aa8c/?dl=1)) | 256x256          |
+| [XL/2](https://cloud.tsinghua.edu.cn/f/915ed24e555b4393aa8c/?dl=1) | 256x256          |
 
 
 
